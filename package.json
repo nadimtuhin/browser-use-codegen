@@ -1,9 +1,18 @@
 {
-  "name": "@fb-mkt/browser-use-codegen",
+  "name": "browser-use-codegen",
   "version": "1.0.0",
   "description": "Generate Puppeteer scripts by recording browser actions - browser-use style automation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "author": "Nadim Tuhin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nadimtuhin/browser-use-codegen.git"
+  },
+  "homepage": "https://github.com/nadimtuhin/browser-use-codegen#readme",
+  "bugs": {
+    "url": "https://github.com/nadimtuhin/browser-use-codegen/issues"
+  },
   "bin": {
     "browser-use-codegen": "bin/cli.js",
     "generate-scraper": "bin/generate-scraper.js",
