@@ -1,0 +1,109 @@
+[
+  {
+    "type": "navigate",
+    "timestamp": 1700000000000,
+    "selector": {
+      "primary": "body",
+      "fallbacks": []
+    },
+    "page": {
+      "url": "https://example.com",
+      "title": "Example Domain"
+    }
+  },
+  {
+    "type": "click",
+    "timestamp": 1700000001000,
+    "selector": {
+      "primary": "[data-testid=\"submit-button\"]",
+      "fallbacks": ["#submit", "button.primary"]
+    },
+    "target": {
+      "tagName": "button",
+      "id": "submit",
+      "className": "primary btn",
+      "ariaLabel": "Submit form",
+      "text": "Submit"
+    },
+    "page": {
+      "url": "https://example.com/form",
+      "title": "Form Page"
+    }
+  },
+  {
+    "type": "input",
+    "timestamp": 1700000002000,
+    "selector": {
+      "primary": "[data-testid=\"email-input\"]",
+      "fallbacks": ["#email", "input[type=\"email\"]"]
+    },
+    "value": "test@example.com",
+    "target": {
+      "tagName": "input",
+      "id": "email",
+      "ariaLabel": "Email address",
+      "text": ""
+    },
+    "page": {
+      "url": "https://example.com/form",
+      "title": "Form Page"
+    }
+  },
+  {
+    "type": "select",
+    "timestamp": 1700000003000,
+    "selector": {
+      "primary": "[data-testid=\"country-select\"]",
+      "fallbacks": ["#country", "select[name=\"country\"]"]
+    },
+    "value": "US",
+    "target": {
+      "tagName": "select",
+      "id": "country",
+      "text": "United States"
+    },
+    "page": {
+      "url": "https://example.com/form",
+      "title": "Form Page"
+    }
+  },
+  {
+    "type": "scroll",
+    "timestamp": 1700000004000,
+    "selector": {
+      "primary": "body",
+      "fallbacks": ["html"]
+    },
+    "value": "500",
+    "page": {
+      "url": "https://example.com/long-page",
+      "title": "Long Page"
+    }
+  },
+  {
+    "type": "wait",
+    "timestamp": 1700000005000,
+    "selector": {
+      "primary": "body",
+      "fallbacks": []
+    },
+    "value": "1000",
+    "page": {
+      "url": "https://example.com",
+      "title": "Example"
+    }
+  },
+  {
+    "type": "extract",
+    "timestamp": 1700000006000,
+    "selector": {
+      "primary": "[data-testid=\"product-price\"]",
+      "fallbacks": [".price", "span.amount"]
+    },
+    "value": "productPrice",
+    "page": {
+      "url": "https://example.com/product",
+      "title": "Product Page"
+    }
+  }
+]

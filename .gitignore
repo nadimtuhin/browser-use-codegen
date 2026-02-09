@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+generated/*.ts
+!generated/.gitkeep
+.DS_Store
+*.pid
+.env
+.env.local

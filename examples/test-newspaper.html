@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Chronicle - Breaking News</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        .header {
+            background: #1a1a1a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .header .tagline {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+        .nav {
+            background: #333;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+        .nav a:hover {
+            background: #555;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .breaking-news {
+            background: #c00;
+            color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .breaking-news h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .main-story {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .main-story h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .main-story .meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .main-story img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin: 20px 0;
+        }
+        .main-story p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .article {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .article img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .article-content {
+            padding: 20px;
+        }
+        .article h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .article .category {
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .article .excerpt {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .article .meta {
+            font-size: 12px;
+            color: #999;
+        }
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+        .newsletter {
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .newsletter h3 {
+            margin-bottom: 15px;
+        }
+        .newsletter input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin-right: 10px;
+        }
+        .newsletter button {
+            padding: 10px 30px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .newsletter button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>The Daily Chronicle</h1>
+        <div class="tagline">Truth in Every Story | Est. 2024</div>
+    </div>
+
+    <nav class="nav">
+        <a href="#world">World</a>
+        <a href="#politics">Politics</a>
+        <a href="#business">Business</a>
+        <a href="#technology">Technology</a>
+        <a href="#sports">Sports</a>
+        <a href="#culture">Culture</a>
+    </nav>
+
+    <div class="container">
+        <div class="breaking-news">
+            <h2>🔴 BREAKING NEWS</h2>
+            <p>Major tech company announces breakthrough in quantum computing - Read more below</p>
+        </div>
+
+        <div class="main-story">
+            <span class="category">Technology</span>
+            <h2>Quantum Computing Breakthrough: Scientists Achieve 99.9% Error Correction</h2>
+            <div class="meta">
+                By Sarah Johnson | February 10, 2026 | 5 min read
+            </div>
+            <img src="https://picsum.photos/1200/400?random=1" alt="Quantum computer">
+            <p>
+                In a groundbreaking development, researchers at the Global Quantum Institute have achieved
+                an unprecedented 99.9% error correction rate in quantum computing operations, bringing
+                practical quantum computers significantly closer to reality.
+            </p>
+            <p>
+                The breakthrough addresses one of the most critical challenges in quantum computing:
+                maintaining qubit stability and reducing computational errors. "This is a watershed moment
+                for the field," said Dr. Elena Martinez, lead researcher on the project.
+            </p>
+            <p>
+                The team's innovative approach involves a novel error-correction algorithm that can detect
+                and fix quantum bit errors in real-time without destroying the quantum state. This
+                advancement could accelerate the development of quantum computers capable of solving
+                complex problems in drug discovery, climate modeling, and cryptography.
+            </p>
+        </div>
+
+        <h2 style="margin-bottom: 20px;">Latest Headlines</h2>
+        <div class="articles-grid">
+            <article class="article" data-article-id="1">
+                <img src="https://picsum.photos/400/200?random=2" alt="Climate summit">
+                <div class="article-content">
+                    <span class="category">World</span>
+                    <h3>Global Climate Summit Reaches Historic Agreement</h3>
+                    <p class="excerpt">
+                        Over 190 nations commit to ambitious carbon reduction targets in landmark
+                        environmental pact signed in Geneva.
+                    </p>
+                    <div class="meta">By Michael Chen | 3 hours ago</div>
+                </div>
+            </article>
+
+            <article class="article" data-article-id="2">
+                <img src="https://picsum.photos/400/200?random=3" alt="Stock market">
+                <div class="article-content">
+                    <span class="category">Business</span>
+                    <h3>Markets Rally as Tech Stocks Hit Record Highs</h3>
+                    <p class="excerpt">
+                        Major indices surge following positive earnings reports from leading
+                        technology companies and strong economic indicators.
+                    </p>
+                    <div class="meta">By Jennifer Park | 5 hours ago</div>
+                </div>
+            </article>
+
+            <article class="article" data-article-id="3">
+                <img src="https://picsum.photos/400/200?random=4" alt="Sports championship">
+                <div class="article-content">
+                    <span class="category">Sports</span>
+                    <h3>Underdogs Triumph in Championship Finals</h3>
+                    <p class="excerpt">
+                        In a stunning upset, the Phoenix Warriors defeat defending champions
+                        in overtime thriller watched by millions worldwide.
+                    </p>
+                    <div class="meta">By David Rodriguez | 7 hours ago</div>
+                </div>
+            </article>
+
+            <article class="article" data-article-id="4">
+                <img src="https://picsum.photos/400/200?random=5" alt="Medical research">
+                <div class="article-content">
+                    <span class="category">Health</span>
+                    <h3>New Cancer Treatment Shows Promising Results in Trials</h3>
+                    <p class="excerpt">
+                        Experimental therapy demonstrates 85% success rate in Phase III clinical
+                        trials, offering hope to thousands of patients.
+                    </p>
+                    <div class="meta">By Dr. Amanda Foster | 9 hours ago</div>
+                </div>
+            </article>
+
+            <article class="article" data-article-id="5">
+                <img src="https://picsum.photos/400/200?random=6" alt="Space exploration">
+                <div class="article-content">
+                    <span class="category">Science</span>
+                    <h3>Mars Mission Successfully Deploys Research Station</h3>
+                    <p class="excerpt">
+                        Autonomous robots complete construction of first permanent research
+                        facility on Martian surface, marking new era in space exploration.
+                    </p>
+                    <div class="meta">By Robert Kim | 12 hours ago</div>
+                </div>
+            </article>
+
+            <article class="article" data-article-id="6">
+                <img src="https://picsum.photos/400/200?random=7" alt="Cultural event">
+                <div class="article-content">
+                    <span class="category">Culture</span>
+                    <h3>International Film Festival Announces Award Winners</h3>
+                    <p class="excerpt">
+                        Independent drama takes top prize at prestigious festival celebrating
+                        diversity and innovation in global cinema.
+                    </p>
+                    <div class="meta">By Lisa Thompson | 14 hours ago</div>
+                </div>
+            </article>
+        </div>
+
+        <div class="newsletter">
+            <h3>📧 Subscribe to Our Daily Newsletter</h3>
+            <p style="margin-bottom: 15px; color: #666;">
+                Get the day's top stories delivered to your inbox every morning
+            </p>
+            <form id="newsletter-form">
+                <input type="email" id="email-input" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 The Daily Chronicle. All rights reserved.</p>
+        <p style="margin-top: 10px; font-size: 12px;">
+            <a href="#" style="color: #ccc; margin: 0 10px;">Privacy Policy</a> |
+            <a href="#" style="color: #ccc; margin: 0 10px;">Terms of Service</a> |
+            <a href="#" style="color: #ccc; margin: 0 10px;">Contact Us</a>
+        </p>
+    </footer>
+
+    <script>
+        // Add some interactivity for testing
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            alert('Thank you for subscribing with: ' + email);
+        });
+
+        // Click tracking for articles
+        document.querySelectorAll('.article').forEach(article => {
+            article.addEventListener('click', function() {
+                const id = this.getAttribute('data-article-id');
+                console.log('Article clicked:', id);
+            });
+        });
+
+        // Navigation tracking
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.textContent;
+                console.log('Navigation:', section);
+            });
+        });
+    </script>
+</body>
+</html>

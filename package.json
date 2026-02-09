@@ -1,0 +1,57 @@
+{
+  "name": "@fb-mkt/browser-use-codegen",
+  "version": "1.0.0",
+  "description": "Generate Puppeteer scripts by recording browser actions - browser-use style automation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "browser-use-codegen": "bin/cli.js",
+    "generate-scraper": "bin/generate-scraper.js",
+    "autonomous-scrape": "bin/autonomous-scrape.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./cli": "./dist/cli.js",
+    "./recorder": "./dist/lib/ActionRecorder.js",
+    "./generator": "./dist/lib/ScriptGenerator.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "ora": "^5.4.1",
+    "puppeteer-core": "^21.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md"
+  ],
+  "keywords": [
+    "puppeteer",
+    "browser-automation",
+    "codegen",
+    "script-generator",
+    "browser-use",
+    "automation",
+    "scraping"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
