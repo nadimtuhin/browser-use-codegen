@@ -2,7 +2,7 @@
  * Types for the browser-use-codegen package
  */
 
-export type ActionType = 
+export type ActionType =
   | 'click'
   | 'input'
   | 'navigate'
@@ -10,6 +10,9 @@ export type ActionType =
   | 'select'
   | 'wait'
   | 'extract'
+  | 'drag'
+  | 'upload'
+  | 'keyboard'
 
 export interface SelectorInfo {
   primary: string

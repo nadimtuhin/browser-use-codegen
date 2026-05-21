@@ -97,6 +97,15 @@ if __name__ == "__main__":
       case 'extract':
         return this.generateExtractCode(action)
 
+      case 'drag':
+        return this.generateDragCode(action)
+
+      case 'upload':
+        return this.generateUploadCode(action)
+
+      case 'keyboard':
+        return this.generateKeyboardCode(action)
+
       default:
         return `            # Unsupported action type: ${action.type}`
     }
@@ -179,5 +188,35 @@ if __name__ == "__main__":
             ${fieldName} = ${fieldName}_el.text_content() if ${fieldName}_el else None
             if ${fieldName}:
                 result['${fieldName}'] = ${fieldName}.strip()`
+  }
+
+  private generateDragCode(action: RecordedAction): string {
+    const source = action.selector.primary.replace(/'/g, "\\'")
+    const target = action.value ? action.value.replace(/'/g, "\\'") : ''
+    const delay = this.options.addDelays ? '\n            page.wait_for_timeout(500)' : ''
+
+    if (!target) {
+      return `            # Drag action requires target selector\n            pass  # TODO: Set value to target selector`
+    }
+
+    return `            _source = page.locator('${source}')
+            _target = page.locator('${target}')
+            _source.drag_to(_target)${delay}`
+  }
+
+  private generateUploadCode(action: RecordedAction): string {
+    const filePath = action.value || ''
+    const locator = this.buildLocator(action)
+    const delay = this.options.addDelays ? '\n            page.wait_for_timeout(300)' : ''
+
+    return `            ${locator}.set_input_files('${filePath.replace(/'/g, "\\'")}')${delay}`
+  }
+
+  private generateKeyboardCode(action: RecordedAction): string {
+    const keyCombo = action.value || 'Enter'
+    const delay = this.options.addDelays ? '\n            page.wait_for_timeout(300)' : ''
+
+    return `            # Keyboard: ${keyCombo}
+            page.keyboard.press('${keyCombo.replace(/'/g, "\\'")}')${delay}`
   }
 }

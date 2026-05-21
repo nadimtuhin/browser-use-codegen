@@ -166,6 +166,15 @@ if (require.main === module) {
       case 'extract':
         return this.generateExtractCode(action)
 
+      case 'drag':
+        return this.generateDragCode(action)
+
+      case 'upload':
+        return this.generateUploadCode(action)
+
+      case 'keyboard':
+        return this.generateKeyboardCode(action)
+
       default:
         return `  // Unsupported action type: ${action.type}`
     }
@@ -276,14 +285,63 @@ if (require.main === module) {
       if (el) break
     }
     if (!el) return null
-    
+
     // Try to get meaningful content
     var value = el.textContent || el.value || el.getAttribute('content') || ''
     return value.replace(/^[\\s\\n\\r]+|[\\s\\n\\r]+$/g, '')
   }, ${JSON.stringify(allSelectors)})
-  
+
   if (${fieldName}Val) {
     result['${fieldName}'] = ${fieldName}Val
   }`
+  }
+
+  private generateDragCode(action: RecordedAction): string {
+    const source = action.selector.primary
+    const target = action.value || ''
+    const selectorBlock = this.generateSelectorLogic(action, 'sourceEl')
+    const delay = this.options.addDelays ? '\n      await delay(500)' : ''
+
+    if (!target) {
+      return `  ${selectorBlock} {
+      // Note: Drag action requires a target. Set value to target selector.
+      console.warn('Drag action missing target selector')
+    }
+  }`
+    }
+
+    return `  ${selectorBlock} {
+      const targetEl = await page.$('${target.replace(/'/g, "\\'")}')
+      if (targetEl) {
+        const box = await sourceEl.boundingBox()
+        const targetBox = await targetEl.boundingBox()
+        if (box && targetBox) {
+          await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+          await page.mouse.down()
+          await page.mouse.move(targetBox.x + targetBox.width / 2, targetBox.y + targetBox.height / 2)
+          await page.mouse.up()
+        }
+      }${delay}
+    }
+  }`
+  }
+
+  private generateUploadCode(action: RecordedAction): string {
+    const filePath = action.value || ''
+    const selectorBlock = this.generateSelectorLogic(action, 'fileInput')
+
+    return `  ${selectorBlock} {
+      await fileInput.uploadFile('${filePath.replace(/'/g, "\\'")}')
+      ${this.options.addDelays ? 'await delay(500)' : ''}
+    }
+  }`
+  }
+
+  private generateKeyboardCode(action: RecordedAction): string {
+    const keyCombo = action.value || 'Enter'
+    const delay = this.options.addDelays ? '\n  await delay(300)' : ''
+
+    return `  // Keyboard: ${keyCombo}
+  await page.keyboard.press('${keyCombo.replace(/'/g, "\\'")}')${delay}`
   }
 }

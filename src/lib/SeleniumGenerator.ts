@@ -120,6 +120,15 @@ if __name__ == "__main__":
       case 'extract':
         return this.generateExtractCode(action)
 
+      case 'drag':
+        return this.generateDragCode(action)
+
+      case 'upload':
+        return this.generateUploadCode(action)
+
+      case 'keyboard':
+        return this.generateKeyboardCode(action)
+
       default:
         return `        # Unsupported action type: ${action.type}`
     }
@@ -220,5 +229,51 @@ if __name__ == "__main__":
                 pass
         if _${fieldName}_el:
             result['${fieldName}'] = _${fieldName}_el.text.strip()`
+  }
+
+  private generateDragCode(action: RecordedAction): string {
+    const source = action.selector.primary.replace(/'/g, "\\'")
+    const target = action.value ? action.value.replace(/'/g, "\\'") : ''
+    const delay = this.options.addDelays ? '\n        time.sleep(0.5)' : ''
+
+    if (!target) {
+      return `        # Drag action requires target selector\n        pass  # TODO: Set value to target selector`
+    }
+
+    return `        from selenium.webdriver.common.action_chains import ActionChains
+        _source = driver.find_element(By.CSS_SELECTOR, '${source}')
+        _target = driver.find_element(By.CSS_SELECTOR, '${target}')
+        ActionChains(driver).drag_and_drop(_source, _target).perform()${delay}`
+  }
+
+  private generateUploadCode(action: RecordedAction): string {
+    const filePath = action.value || ''
+    const { by, value: sel } = this.selectorToBy(action.selector.primary)
+    const delay = this.options.addDelays ? '\n        time.sleep(0.3)' : ''
+
+    return `        driver.find_element(${by}, '${sel.replace(/'/g, "\\'")}').send_keys('${filePath.replace(/'/g, "\\'")}')${delay}`
+  }
+
+  private generateKeyboardCode(action: RecordedAction): string {
+    const keyCombo = action.value || 'Return'
+    const delay = this.options.addDelays ? '\n        time.sleep(0.3)' : ''
+
+    // Map common shortcuts to Selenium Keys
+    const keyMap: Record<string, string> = {
+      'ctrl+a': 'CONTROL + "a"',
+      'cmd+a': 'COMMAND + "a"',
+      'ctrl+z': 'CONTROL + "z"',
+      'cmd+z': 'COMMAND + "z"',
+      'ctrl+s': 'CONTROL + "s"',
+      'cmd+s': 'COMMAND + "s"',
+      'shift+Home': 'SHIFT + HOME',
+      'ctrl+shift+Delete': 'CONTROL + SHIFT + DELETE',
+    }
+
+    const seleniumKey = keyMap[keyCombo] || `Keys.${keyCombo.toUpperCase()}`
+
+    return `        # Keyboard: ${keyCombo}
+        from selenium.webdriver.common.keys import Keys
+        webdriver.ActionChains(driver).send_keys(${seleniumKey}).perform()${delay}`
   }
 }

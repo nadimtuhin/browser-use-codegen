@@ -132,6 +132,18 @@ export class ScriptReplay {
         await this.findElement(action)
         break
 
+      case 'drag':
+        await this.executeDrag(action)
+        break
+
+      case 'upload':
+        await this.executeUpload(action)
+        break
+
+      case 'keyboard':
+        await this.executeKeyboard(action)
+        break
+
       default:
         // Unknown action type — skip
         break
@@ -197,5 +209,35 @@ export class ScriptReplay {
         scrollValue
       )
     }
+  }
+
+  private async executeDrag(action: RecordedAction): Promise<void> {
+    const sourceEl = await this.findElement(action)
+    if (!sourceEl || !action.value) return
+
+    const targetEl = await this.page.$(action.value)
+    if (!targetEl) return
+
+    const sourceBox = await sourceEl.boundingBox()
+    const targetBox = await targetEl.boundingBox()
+
+    if (sourceBox && targetBox) {
+      await this.page.mouse.move(sourceBox.x + sourceBox.width / 2, sourceBox.y + sourceBox.height / 2)
+      await this.page.mouse.down()
+      await this.page.mouse.move(targetBox.x + targetBox.width / 2, targetBox.y + targetBox.height / 2)
+      await this.page.mouse.up()
+    }
+  }
+
+  private async executeUpload(action: RecordedAction): Promise<void> {
+    const fileInput = await this.findElement(action)
+    if (!fileInput || !action.value) return
+
+    await (fileInput as any).uploadFile(action.value)
+  }
+
+  private async executeKeyboard(action: RecordedAction): Promise<void> {
+    const keyCombo = action.value || 'Enter'
+    await this.page.keyboard.press(keyCombo as any)
   }
 }
