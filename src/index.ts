@@ -44,6 +44,11 @@ export {
   type ErrorClassification,
 } from './lib/ErrorRecovery'
 export { ActionEnhancer } from './lib/ActionEnhancer'
+export {
+  BrowserCompatibility,
+  BrowserType,
+  type BrowserConfig,
+} from './lib/BrowserCompatibility'
 export { 
   BrowserManager, 
   createBrowserManager,
