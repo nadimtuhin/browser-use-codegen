@@ -49,6 +49,13 @@ export {
   BrowserType,
   type BrowserConfig,
 } from './lib/BrowserCompatibility'
+export {
+  ApiInteraction,
+  type ApiRequest,
+  type ApiResponse,
+  type ApiAssertion,
+  type ApiValidation,
+} from './lib/ApiInteraction'
 export { 
   BrowserManager, 
   createBrowserManager,
