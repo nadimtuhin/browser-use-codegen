@@ -43,6 +43,7 @@ export {
   type DegradedResult,
   type ErrorClassification,
 } from './lib/ErrorRecovery'
+export { ActionEnhancer } from './lib/ActionEnhancer'
 export { 
   BrowserManager, 
   createBrowserManager,

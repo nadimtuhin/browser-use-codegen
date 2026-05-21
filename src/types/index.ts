@@ -17,6 +17,7 @@ export type ActionType =
 export interface SelectorInfo {
   primary: string
   fallbacks: string[]
+  xpaths?: string[]
 }
 
 export interface TargetInfo {
