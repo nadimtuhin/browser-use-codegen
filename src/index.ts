@@ -33,6 +33,16 @@ export {
   type ReplayResult,
   type ActionResult,
 } from './lib/ScriptReplay'
+
+export {
+  ErrorRecovery,
+  type RetryConfig,
+  type RetryResult,
+  type FallbackResult,
+  type WaitResult,
+  type DegradedResult,
+  type ErrorClassification,
+} from './lib/ErrorRecovery'
 export { 
   BrowserManager, 
   createBrowserManager,
