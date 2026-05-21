@@ -27,6 +27,12 @@ export { ScriptGenerator } from './lib/ScriptGenerator'
 export { BrowserUseGenerator } from './lib/BrowserUseGenerator'
 export { PlaywrightGenerator, type PlaywrightGeneratorOptions } from './lib/PlaywrightGenerator'
 export { SeleniumGenerator, type SeleniumGeneratorOptions } from './lib/SeleniumGenerator'
+export {
+  ScriptReplay,
+  type ScriptReplayOptions,
+  type ReplayResult,
+  type ActionResult,
+} from './lib/ScriptReplay'
 export { 
   BrowserManager, 
   createBrowserManager,

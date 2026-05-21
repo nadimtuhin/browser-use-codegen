@@ -19,6 +19,8 @@ import { ActionRecorder } from './lib/ActionRecorder'
 import { AIAssistedRecorder } from './lib/AIAssistedRecorder'
 import { ScriptGenerator } from './lib/ScriptGenerator'
 import { BrowserUseGenerator } from './lib/BrowserUseGenerator'
+import { PlaywrightGenerator } from './lib/PlaywrightGenerator'
+import { SeleniumGenerator } from './lib/SeleniumGenerator'
 import { createBrowserManager } from './lib/BrowserManager'
 
 const program = new Command()
@@ -35,7 +37,7 @@ program
   .option('--no-comments', 'Skip adding comments to generated code')
   .option('--screenshots', 'Capture screenshots during recording')
   .option('--ai', 'Enable AI-assisted recording (extraction suggestions)')
-  .option('-f, --format <format>', 'Output format: puppeteer | browser-use', 'puppeteer')
+  .option('-f, --format <format>', 'Output format: puppeteer | browser-use | playwright | selenium', 'puppeteer')
   .option('--debug', 'Enable debug logging')
   .action(async (prompt: string, options) => {
     const output = options.output || generateDefaultOutputPath()
@@ -110,6 +112,18 @@ program
       
       if (options.format === 'browser-use') {
         const generator = new BrowserUseGenerator({
+          includeComments: options.comments,
+          addDelays: options.delays,
+        })
+        code = generator.generate(profileId, prompt, actions)
+      } else if (options.format === 'playwright') {
+        const generator = new PlaywrightGenerator({
+          includeComments: options.comments,
+          addDelays: options.delays,
+        })
+        code = generator.generate(profileId, prompt, actions)
+      } else if (options.format === 'selenium') {
+        const generator = new SeleniumGenerator({
           includeComments: options.comments,
           addDelays: options.delays,
         })

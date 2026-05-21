@@ -25,6 +25,7 @@ Commands:
 
 Options:
   --output=<path>         Output file path (default: generated/scraper-<site>.ts)
+  --format=<fmt>          Output format: puppeteer | playwright | selenium (default: puppeteer)
   --no-tests              Skip self-test functionality
   --no-selector-tests     Skip selector tests
   --max-headlines=<n>     Maximum headlines to extract (default: 50)
@@ -43,6 +44,7 @@ function parseArgs(args) {
     command: '',
     url: '',
     output: '',
+    format: 'puppeteer',
     includeTests: true,
     includeSelectorTests: true,
     maxHeadlines: 50,
@@ -59,6 +61,8 @@ function parseArgs(args) {
       options.includeTests = false
     } else if (arg === '--no-selector-tests') {
       options.includeSelectorTests = false
+    } else if (arg.startsWith('--format=')) {
+      options.format = arg.split('=')[1]
     } else if (arg.startsWith('--url=')) {
       options.url = arg.split('=')[1]
     } else if (arg.startsWith('--output=')) {
