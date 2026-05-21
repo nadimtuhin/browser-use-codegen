@@ -1,10 +1,13 @@
 import { Page } from 'puppeteer-core'
 import { RecordedAction } from '../types'
+import { ErrorRecovery, type RetryConfig } from './ErrorRecovery'
 
 export interface ScriptReplayOptions {
   stopOnError?: boolean
   captureScreenshots?: boolean
   delayMultiplier?: number
+  retryConfig?: RetryConfig
+  enableErrorRecovery?: boolean
 }
 
 export interface ActionResult {
@@ -25,7 +28,8 @@ export interface ReplayResult {
 
 export class ScriptReplay {
   private page: Page
-  private options: Required<ScriptReplayOptions>
+  private options: Required<Omit<ScriptReplayOptions, 'retryConfig' | 'enableErrorRecovery'>> & { retryConfig?: RetryConfig; enableErrorRecovery?: boolean }
+  private errorRecovery: ErrorRecovery
 
   constructor(page: Page, options: ScriptReplayOptions = {}) {
     this.page = page
@@ -33,8 +37,10 @@ export class ScriptReplay {
       stopOnError: false,
       captureScreenshots: false,
       delayMultiplier: 1,
+      enableErrorRecovery: true,
       ...options,
     }
+    this.errorRecovery = new ErrorRecovery(page, options.retryConfig)
   }
 
   async run(actions: RecordedAction[]): Promise<ReplayResult> {
@@ -50,7 +56,24 @@ export class ScriptReplay {
       let screenshot: string | undefined
 
       try {
-        await this.executeAction(action)
+        if (this.options.enableErrorRecovery && action.type === 'navigate') {
+          const retryResult = await this.errorRecovery.executeWithRetry(action, async () => {
+            await this.executeAction(action)
+          })
+          if (!retryResult.success) {
+            throw retryResult.error || new Error('Navigate failed after retries')
+          }
+        } else if (this.options.enableErrorRecovery && action.type !== 'wait') {
+          const retryResult = await this.errorRecovery.executeWithRetry(action, async () => {
+            await this.executeAction(action)
+          })
+          if (!retryResult.success) {
+            throw retryResult.error || new Error(`${action.type} action failed after retries`)
+          }
+        } else {
+          await this.executeAction(action)
+        }
+
         actionsExecuted++
 
         if (this.options.captureScreenshots && action.type !== 'wait') {
@@ -60,8 +83,6 @@ export class ScriptReplay {
           } catch {
             // Non-fatal
           }
-        } else {
-          actionsExecuted = actionsExecuted // already incremented above
         }
       } catch (e) {
         success = false
