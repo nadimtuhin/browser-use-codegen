@@ -25,6 +25,7 @@ export { ActionRecorder } from './lib/ActionRecorder'
 export { AIAssistedRecorder } from './lib/AIAssistedRecorder'
 export { ScriptGenerator } from './lib/ScriptGenerator'
 export { BrowserUseGenerator } from './lib/BrowserUseGenerator'
+export { PlaywrightGenerator, type PlaywrightGeneratorOptions } from './lib/PlaywrightGenerator'
 export { 
   BrowserManager, 
   createBrowserManager,

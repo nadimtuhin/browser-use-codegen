@@ -132,8 +132,9 @@ if (require.main === module) {
 
     return actions
       .map((action, index) => {
+        const screenshotComment = action.screenshot ? `\n  // Screenshot: ${action.screenshot}` : ''
         const stepComment = this.options.includeComments
-          ? `  // Step ${index + 1}: ${action.type}${action.target?.tagName ? ` on <${action.target.tagName}>` : ''}${action.value ? ` (${action.value.substring(0, 30)}${action.value.length > 30 ? '...' : ''})` : ''}`
+          ? `  // Step ${index + 1}: ${action.type}${action.target?.tagName ? ` on <${action.target.tagName}>` : ''}${action.value ? ` (${action.value.substring(0, 30)}${action.value.length > 30 ? '...' : ''})` : ''}${screenshotComment}`
           : ''
         const code = this.generateActionCode(action)
         return stepComment ? `${stepComment}\n${code}` : code

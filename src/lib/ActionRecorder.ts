@@ -25,11 +25,21 @@ export class ActionRecorder {
     // Setup bridge to receive actions from browser
     await this.page.exposeFunction(
       '__recordActionBridge',
-      (actionJson: string) => {
+      async (actionJson: string) => {
         if (!this.isRecording) return
         try {
           const action = JSON.parse(actionJson)
           if (!action.timestamp) action.timestamp = Date.now()
+
+          if (this.options.captureScreenshots && action.type !== 'wait' && action.type !== 'navigate') {
+            try {
+              const screenshot = await this.page.screenshot({ encoding: 'base64' })
+              action.screenshot = screenshot as string
+            } catch (e) {
+              // Non-fatal: screenshot capture failed, continue without it
+            }
+          }
+
           this.actions.push(action)
           if (this.options.debug) {
             console.log('[Recorder]', action.type, action.selector?.primary || '')
