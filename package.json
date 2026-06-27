@@ -1,5 +1,5 @@
 {
-  "name": "browser-use-codegen",
+  "name": "@nadimtuhin/browser-use-codegen",
   "version": "1.0.0",
   "description": "Generate Puppeteer scripts by recording browser actions - browser-use style automation",
   "main": "dist/index.js",
