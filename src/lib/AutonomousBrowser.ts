@@ -8,6 +8,7 @@
  */
 
 import puppeteer, { type Browser, type Page, type PuppeteerLaunchOptions } from 'puppeteer-core'
+import * as fs from 'fs'
 
 export interface AutonomousOptions {
   /** Run in headless mode (default: true) */
@@ -57,25 +58,23 @@ const DEFAULT_EXECUTABLE_PATHS = {
  * Find Chrome/Chromium executable automatically
  */
 export function findChromeExecutable(): string | null {
+  // Env overrides take priority
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    return process.env.PUPPETEER_EXECUTABLE_PATH
+  }
+  if (process.env.CHROME_PATH) {
+    return process.env.CHROME_PATH
+  }
+
   const platform = process.platform as keyof typeof DEFAULT_EXECUTABLE_PATHS
   const paths = DEFAULT_EXECUTABLE_PATHS[platform] || []
-  
-  const fs = require('fs')
+
   for (const path of paths) {
     if (fs.existsSync(path)) {
       return path
     }
   }
-  
-  // Try environment variable
-  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
-    return process.env.PUPPETEER_EXECUTABLE_PATH
-  }
-  
-  if (process.env.CHROME_PATH) {
-    return process.env.CHROME_PATH
-  }
-  
+
   return null
 }
 
@@ -186,7 +185,7 @@ export async function scrapeHeadlinesAutonomous(
     }
 
     // Generic wait for content
-    await session.page.waitForTimeout(waitTime)
+    await new Promise((r) => setTimeout(r, waitTime))
 
     // Extract headlines
     const headlines = await session.page.evaluate(
