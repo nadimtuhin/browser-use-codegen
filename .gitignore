@@ -4,6 +4,11 @@ dist/
 generated/*.ts
 !generated/.gitkeep
 .DS_Store
+node_modules/
+dist/
+coverage/
+*.log
+.env
 *.pid
 .env
 .env.local
